@@ -90,7 +90,7 @@ struct CircularTimer: View {
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .background(
                                     Capsule()
-                                        .fill(.black.opacity(0.75))
+                                        .fill(.orange)
                                 )
                         }.buttonStyle(.plain)
                     }
