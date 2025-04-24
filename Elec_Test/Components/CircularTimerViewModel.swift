@@ -72,7 +72,7 @@ class CircularTimerViewModel: ObservableObject {
     func reset(to interval: TimeInterval? = nil, progress: CGFloat = 0.0) {
         cancellable?.cancel()
         self.progress = progress
-
+        
         let actualInterval = interval ?? self.timerInterval / (1 - progress)
         self.timerInterval = actualInterval * (1 - progress)
         self.stepProgress = CGFloat(timeStep / actualInterval)

@@ -21,8 +21,8 @@ import SwiftUI
  */
 
 struct CircularProgressBar: View {
-    @Binding var progress: Float
-    @Binding var text: String
+    var progress: Float
+    var text: String
 
     var body: some View {
         ZStack {
