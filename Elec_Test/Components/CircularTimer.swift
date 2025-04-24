@@ -58,7 +58,7 @@ struct CircularTimer: View {
                     .rotationEffect(.degrees(-90))
                     .animation(.easeInOut, value: viewModel.progress)
                     .overlay(
-                        Text(viewModel.textFromTimeInterval() == "0s" ? "Completed!" : viewModel.textFromTimeInterval())
+                        Text(viewModel.textFromTimeInterval())
                             .font(.largeTitle)
                             .bold()
                             .monospaced()
@@ -68,22 +68,50 @@ struct CircularTimer: View {
                     Spacer()
                 }
                 
-                Button(action:{
-                    viewModel.reset(to: originalInterval, progress: 0.0)
-                }){
-                    Text("Restart Timer")
-                        .font(.headline)
-                        .bold()
-                        .foregroundStyle(.white)
-                        .padding(12)
-                        .padding(.horizontal)
-                        .background(
-                            Capsule()
-                                .fill(Color(hex: 0xFF4f758b))
-                        )
-                }.buttonStyle(.plain)
+                HStack{
+                    if viewModel.textFromTimeInterval() != "Completed"{
+                        Button(action:{
+                            if viewModel.isRunning{
+                                viewModel.pauseTimer()
+                            }else{
+                                viewModel.startTimer()
+                            }
+                            
+                            withAnimation{
+                                viewModel.isRunning.toggle()
+                            }
+                        }){
+                            Text(viewModel.isRunning ? "Pause" : "Play")
+                                .font(.headline)
+                                .bold()
+                                .foregroundStyle(.white)
+                                .padding(12)
+                                .padding(.horizontal)
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .background(
+                                    Capsule()
+                                        .fill(.black.opacity(0.75))
+                                )
+                        }.buttonStyle(.plain)
+                    }
+                    
+                    Button(action:{
+                        viewModel.reset(to: originalInterval, progress: 0.0)
+                    }){
+                        Text("Restart Timer")
+                            .font(.headline)
+                            .bold()
+                            .foregroundStyle(.white)
+                            .padding(12)
+                            .padding(.horizontal)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .background(
+                                Capsule()
+                                    .fill(Color(hex: 0xFF4f758b))
+                            )
+                    }.buttonStyle(.plain)
+                }.padding(.top)
                 .padding()
-                .padding(.top)
                 
                 Spacer()
             }
